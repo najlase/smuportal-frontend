@@ -1,0 +1,31 @@
+<nav class="navbar navbar-expand-lg border-bottom">
+  <a class="navbar-brand" href="#">
+    <img src="assets/headerimg@2x.png" class="logo" alt="Home Page" id="open-menu">
+  </a>
+</nav>
+<div class="container" data-ng-app="AppList" data-ng-controller="myCtrl">
+  <div class="row">
+    <div class="col-md-2">
+      Filter by status
+    </div>
+    <div class="col-md-10">
+      <input type="text" class="search" data-ng-model="table" />
+    </div>
+  </div>
+  <br/>
+  <table>
+    <tr>
+      <th>UserID</th>
+      <th>InternshipID</th>
+      <th>AppliedOn</th>
+      <th>Validation</th>
+      <th>Status</th>
+    </tr>
+    <tr data-ng-repeat="">
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+  </table>
+  <div data-pagination="" data-num-pages="numPages()" data-current-page="currentPage" data-max-size="maxSize" data-boundary-links="true"></div>
+</div>
