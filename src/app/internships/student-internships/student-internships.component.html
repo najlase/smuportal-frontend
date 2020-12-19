@@ -4,3 +4,89 @@
   </a>
 </nav>
 
+<div class="d-flex" id="wrapper">
+  <div class="border-right" id="sidebar-wrapper">
+    <div class="list-group list-group-flush">
+
+
+      <div class="filter">
+        <div class="input-group mb-2">
+          <input type="text"  style="padding-left: 10px;border-radius: 10px 0px 0px 10px; border: 1px solid silver;" id="inlineFormInputGroup" placeholder="Search">
+          <div class="input-group-prepend" style="cursor: pointer;">
+            <div class="input-group-text" style="border-radius: 0px 10px 10px 0px;">
+              <fa-icon [icon]="faSearch"></fa-icon>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="filter">
+        <span class="ml-2">Domain</span>
+        <select class="custom-select mr-sm-2">
+          <option>Choose...</option>
+          <option>Software Engineering</option>
+          <option>Mangement</option>
+        </select>
+      </div>
+
+      <div class="filter">
+        <span class="ml-2">Location</span>
+        <select class="custom-select mr-sm-2">
+          <option>Choose...</option>
+          <option>Tunisia</option>
+          <option>France</option>
+          <option>US</option>
+        </select>
+      </div>
+
+      <div class="filter">
+        <span class="ml-2">Deadline</span>
+        <input type="date" class="form-control mr-sm-2">
+      </div>
+
+      <div class="filter">
+        <span class="ml-2">Duration</span>
+        <select class="custom-select mr-sm-2">
+          <option>Choose...</option>
+          <option>1 Month or less</option>
+          <option>Between 1 and 3 months</option>
+          <option>More than 3 months</option>
+        </select>
+      </div>
+
+      <div class="form-check filter">
+        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+        <label class="form-check-label" for="defaultCheck1">
+          Show starred only
+        </label>
+      </div>
+
+      <button class="btn btn-success" style="margin-top: 20px; background-color: #368c95; border: 0px;">Filter</button>
+    </div>
+  </div>
+
+
+
+  <div class="content">
+    <h3>Recent Posts</h3>
+    <div style="margin-top: 50px;">
+      <div *ngFor="let internship of internships" class="internship" style="height: 170px">
+        <div class="internship-preview">
+          <img [src]="internship.Company.Logo" style="max-height: 60%; max-width: 60%; margin-left: 50%; transform: translateX(-50%); margin-bottom: 10px;" />
+          <h3 style="text-align: center;">{{internship.Company.Name}}</h3>
+        </div>
+        <div class="internship-info">
+          <div class="progress-container">
+            <fa-icon [icon]="faStar" style="color: silver; font-size: 20px"></fa-icon>
+          </div>
+          <h6 >Deadline: {{internship.Deadline}}</h6>
+          <h2>{{internship.Title}}</h2>
+          <div class="internship-description">{{internship.Description}}</div>
+          <button class="internship-card-btn">Apply</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+

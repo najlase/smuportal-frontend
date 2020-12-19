@@ -3,3 +3,24 @@
     <img src="assets/headerimg@2x.png" class="logo" alt="Home Page" id="open-menu">
   </a>
 </nav>
+
+
+<div class="d-flex" id="wrapper">
+  <div class="border-right" id="sidebar-wrapper">
+    <div class="list-group list-group-flush">
+      <a routerLink="details" routerLinkActive="selected" class="list-group-item list-group-item-action py-2 border-0">
+        <fa-icon [icon]="faUser"></fa-icon>
+        <span class="ml-2">My Account</span>
+      </a>
+      <a routerLink="security" routerLinkActive="selected" class="list-group-item list-group-item-action py-2 border-0">
+        <fa-icon [icon]="faUnlockAlt"></fa-icon>
+        <span class="ml-2">Security</span>
+      </a>
+      <a (click)="onLogout()" class="list-group-item list-group-item-action py-2 border-0">
+        <fa-icon [icon]="faSignOut"></fa-icon>
+        <span class="ml-2">Logout</span>
+      </a>
+    </div>
+  </div>
+  <router-outlet></router-outlet>
+</div>
