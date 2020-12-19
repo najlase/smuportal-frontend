@@ -15,6 +15,7 @@ import { HttpClientModule } from "@angular/common/http";
 import { AppComponent } from "./app.component";
 import { AppService } from "./shared";
 import { ApplicationsModule } from "./applications/applications.module";
+import {InternshipApplicationsModule} from "@app/internship-applications/internship-applications.module";
 
 @NgModule({
   declarations: [AppComponent],
@@ -33,6 +34,7 @@ import { ApplicationsModule } from "./applications/applications.module";
     ProfileModule,
     RedoPortalModule,
     ApplicationsModule,
+    InternshipApplicationsModule,
     RouterModule.forRoot([]),
   ],
   providers: [
