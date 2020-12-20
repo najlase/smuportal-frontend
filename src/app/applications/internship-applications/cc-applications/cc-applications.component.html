@@ -3,29 +3,64 @@
     <img src="assets/headerimg@2x.png" class="logo" alt="Home Page" id="open-menu">
   </a>
 </nav>
-<div class="container" data-ng-app="AppList" data-ng-controller="myCtrl">
-  <div class="row">
-    <div class="col-md-2">
-      Filter by status
-    </div>
-    <div class="col-md-10">
-      <input type="text" class="search" data-ng-model="table" />
-    </div>
+<ng-container *ngIf="this.appRemoved | async">
+  <div class="alert alert-success alert-dismissible fade show" role="alert">
+    The application Has Been Successfully Removed from The List.
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
   </div>
-  <br/>
-  <table>
-    <tr>
-      <th>UserID</th>
-      <th>InternshipID</th>
-      <th>AppliedOn</th>
-      <th>Validation</th>
-      <th>Status</th>
-    </tr>
-    <tr data-ng-repeat="">
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
+</ng-container>
+<div class="table-responsive">
+  <table class="table">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">UserID</th>
+        <th scope="col">InternshipID</th>
+        <th scope="col">AppliedOn</th>
+        <th scope="col">Validation</th>
+        <th scope="col">Status</th>
+        <th scope="col">Remove</th>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-container *ngFor="let app of applicationList| async; let i = index;">
+        <tr>
+          <th scope="row">{{i}}</th>
+          <td>{{app.userID}}</td>
+          <td>{{app.internshipID}}</td>
+          <td>{{app.appliedOn|date:'short'}}</td>
+          <td>
+            <span class="table-change">
+              <select name="validity">
+                <option value="valid">valid</option>
+                <option value="invalid">invalid</option>
+                <option value="none">none</option>
+              </select>
+              <input type="submit" value="Submit">
+              {{app.valid}}
+            </span>
+          </td>
+          <td>
+            <span class="table-change">
+              <select name="status">
+                <option value="pending">pending</option>
+                <option value="submitted to company">submitted to company</option>
+                <option value="received by company">received by company</option>
+              </select>
+              <input type="submit" value="Submit">
+              {{app.status}}
+            </span>
+          </td>
+          <td>
+            <span class="table-change">
+              <button type="button" mdbBtn color="danger" rounded="true" size="sm" class="my-0" (click)="deleteApplication">Remove</button>
+            </span>
+          </td>
+          </td>
+        </tr>
+      </ng-container>
+    </tbody>
   </table>
-  <div data-pagination="" data-num-pages="numPages()" data-current-page="currentPage" data-max-size="maxSize" data-boundary-links="true"></div>
 </div>
