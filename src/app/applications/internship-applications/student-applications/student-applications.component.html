@@ -3,3 +3,66 @@
     <img src="assets/headerimg@2x.png" class="logo" alt="Home Page" id="open-menu">
   </a>
 </nav>
+<div class="d-flex" id="wrapper">
+  <div class="border-right" id="sidebar-wrapper">
+    <div class="list-group list-group-flush">
+
+
+      <div class="filter">
+        <div class="input-group mb-2">
+          <input type="text"  style="padding-left: 10px;border-radius: 10px 0px 0px 10px; border: 1px solid silver;" id="inlineFormInputGroup" placeholder="Search">
+          <div class="input-group-prepend" style="cursor: pointer;">
+            <div class="input-group-text" style="border-radius: 0px 10px 10px 0px;">
+              <fa-icon [icon]="faSearch"></fa-icon>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="filter">
+        <span class="ml-2">Domain</span>
+        <select class="custom-select mr-sm-2">
+          <option>Choose...</option>
+          <option>Software Engineering</option>
+          <option>Mangement</option>
+        </select>
+      </div>
+
+      <div class="filter">
+        <span class="ml-2">Location</span>
+        <select class="custom-select mr-sm-2">
+          <option>Choose...</option>
+          <option>Tunisia</option>
+          <option>France</option>
+          <option>US</option>
+        </select>
+      </div>
+
+      <div class="filter">
+        <span class="ml-2">Deadline</span>
+        <input type="date" class="form-control mr-sm-2">
+      </div>
+
+      <div class="filter">
+        <span class="ml-2">Duration</span>
+        <select class="custom-select mr-sm-2">
+          <option>Choose...</option>
+          <option>1 Month or less</option>
+          <option>Between 1 and 3 months</option>
+          <option>More than 3 months</option>
+        </select>
+      </div>
+
+      <div class="form-check filter">
+        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+        <label class="form-check-label" for="defaultCheck1">
+          Show starred only
+        </label>
+      </div>
+
+      <button class="btn btn-success" style="margin-top: 20px; background-color: #368c95; border: 0px;">Filter</button>
+    </div>
+  </div>
+  <div class="content">
+    
+  </div>
