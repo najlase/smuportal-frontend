@@ -16,3 +16,13 @@
 .nav-item > a {
   color:white;
 }
+
+@media (min-width: 768px) {
+  tr td {
+    vertical-align: middle !important;
+  }
+  tr span:not([class]) {
+    padding: 1rem 1rem;
+  }
+}
+
