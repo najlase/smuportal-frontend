@@ -17,8 +17,27 @@
   color:white;
 }
 
+
+.navbar-item {
+  margin-right: 30px;
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.navbar-item.active{
+  border-bottom: 2px solid white;
+}
+
 * {
   box-sizing: border-box;
+}
+
+
+.detailed-internship-description {
+  width: calc(100% - 160px);
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 .internship-description {
@@ -28,6 +47,7 @@
   width: calc(100% - 160px);
   margin-top: 10px;
 }
+
 
 #sidebar-wrapper {
   width: 20%;
@@ -69,6 +89,7 @@ body {
   margin-left: 50%;
   transform: translateX(-50%);
   margin-bottom: 20px;
+  cursor: pointer;
 }
 
 .internship .deadline {
@@ -307,6 +328,11 @@ body {
 
 .disabled {
   background-color: silver;
+}
+
+
+.filter span {
+  font-weight: bold;
 }
 
 @media screen and (max-width: 480px) {

@@ -1,9 +1,8 @@
 export interface MyApplication {
-    userID: number;
-    uinternshipID: number;
-    files: string;
-    appliedOn:Date;
-    valid:string;
-    status: string;
+    UserID: number;
+    InternshipID: number;
+    Files: string;
+    AppliedOn:Date;
+    Valid:string;
+    Status: string;
 }
-    

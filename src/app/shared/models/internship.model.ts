@@ -9,5 +9,6 @@ export interface Internship {
   Location: string,
   Duration: string,
   Deadline: Date,
-  IsArchived: boolean,
+  StartingDate: Date,
+  IsArchived: boolean
 }

@@ -21,6 +21,16 @@ export class InternshipService {
       'http://localhost:3000/api/user/internships/all').toPromise();
   }
 
+  filter(filter: any): Promise<Internship[]> {
+    return this.httpClient.post<Internship[]>(
+      'http://localhost:3000/api/user/internships/filter', filter).toPromise();
+  }
+
+  filterAll(filter: any): Promise<Internship[]> {
+    return this.httpClient.post<Internship[]>(
+      'http://localhost:3000/api/user/internships/filterAll', filter).toPromise();
+  }
+
   archive(id: string): Promise<Internship> {
     return this.httpClient.patch<Internship>(
       'http://localhost:3000/api/user/internships/' + id + '/archive', null).toPromise();
@@ -39,5 +49,14 @@ export class InternshipService {
   create(internship: Internship): Promise<any> {
     return this.httpClient.post<Internship>(
       'http://localhost:3000/api/user/internships/', internship).toPromise();
+  }
+
+  star(internshipId: string): Promise<any> {
+    return this.httpClient.post<any>(
+      'http://localhost:3000/api/user/internships/' + internshipId + '/star', null).toPromise();
+  }
+  getStarred(): Promise<string[]> {
+    return this.httpClient.get<string[]>(
+      'http://localhost:3000/api/user/internships/starred').toPromise();
   }
 }

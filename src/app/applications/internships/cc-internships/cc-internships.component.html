@@ -2,16 +2,21 @@
   <a class="navbar-brand" href="#">
     <img src="../../../../assets/headerimg@2x.png" class="logo" alt="Home Page" id="open-menu">
   </a>
+
+  <div style="margin-left: calc(20% - 245px);" class="navbar-item active">Dashboard</div>
+  <div class="navbar-item"  routerLink="student/s">Applications</div>
+  <div class="navbar-item">Documents</div>
 </nav>
 
 <div class="d-flex" id="wrapper">
   <div class="border-right" id="sidebar-wrapper">
     <div class="list-group list-group-flush">
+
+
       <div class="filter">
         <div class="input-group mb-2">
-          <input type="text" style="padding-left: 10px;border-radius: 10px 0px 0px 10px; border: 1px solid silver;"
-                 id="inlineFormInputGroup" placeholder="Search">
-          <div class="input-group-prepend" style="cursor: pointer;">
+          <input type="text" [(ngModel)]="internshipFilters.Title" name="filterTitle" style="padding-left: 10px;border-radius: 10px 0px 0px 10px; border: 1px solid silver;" id="inlineFormInputGroup" placeholder="Search by title">
+          <div class="input-group-prepend">
             <div class="input-group-text" style="border-radius: 0px 10px 10px 0px;">
               <fa-icon [icon]="faSearch"></fa-icon>
             </div>
@@ -21,8 +26,8 @@
 
       <div class="filter">
         <span class="ml-2">Domain</span>
-        <select class="custom-select mr-sm-2">
-          <option>Choose...</option>
+        <select class="custom-select mr-sm-2" [(ngModel)]="internshipFilters.Domain" name="filterDomain">
+          <option value="">Choose...</option>
           <option>Software Engineering</option>
           <option>Mangement</option>
         </select>
@@ -30,8 +35,8 @@
 
       <div class="filter">
         <span class="ml-2">Location</span>
-        <select class="custom-select mr-sm-2">
-          <option>Choose...</option>
+        <select class="custom-select mr-sm-2" [(ngModel)]="internshipFilters.Location" name="filterLocation">
+          <option value="">Choose...</option>
           <option>Tunisia</option>
           <option>France</option>
           <option>US</option>
@@ -39,13 +44,18 @@
       </div>
 
       <div class="filter">
-        <span class="ml-2">Deadline</span>
-        <input type="date" class="form-control mr-sm-2">
+        <span class="ml-2">Starts before</span>
+        <input type="date" class="form-control mr-sm-2" [(ngModel)]="internshipFilters.StartingDate" name="filterStartingDate">
+      </div>
+
+      <div class="filter">
+        <span class="ml-2">Deadline before</span>
+        <input type="date" class="form-control mr-sm-2" [(ngModel)]="internshipFilters.Deadline" name="filterDeadline">
       </div>
 
       <div class="filter">
         <span class="ml-2">Duration</span>
-        <select class="custom-select mr-sm-2">
+        <select class="custom-select mr-sm-2" [(ngModel)]="internshipFilters.Duration" name="filterDuration">
           <option>Choose...</option>
           <option>1 Month or less</option>
           <option>Between 1 and 3 months</option>
@@ -54,13 +64,13 @@
       </div>
 
       <div class="form-check filter">
-        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1" [(ngModel)]="internshipFilters.HideArchived">
         <label class="form-check-label" for="defaultCheck1">
-          Show starred only
+          Hide Archived
         </label>
       </div>
 
-      <button class="btn btn-success" style="margin-top: 20px; background-color: #368c95; border: 0px;">Filter</button>
+      <button class="btn btn-success" style="margin-top: 20px; background-color: #368c95; border: 0px;" (click)="filter()">Filter</button>
     </div>
   </div>
 
@@ -72,8 +82,8 @@
 
     <h3>Recent Posts</h3>
     <div style="margin-top: 50px;">
-      <div *ngFor="let internship of internships; let i = index" [ngClass]="{'disabled': internship.IsArchived}"
-           class="internship" style="height: 170px">
+      <h1 *ngIf="internships.length == 0" style="color: gray;text-align: center;"> No Results Found </h1>
+      <div *ngFor="let internship of internships; let i = index" [ngClass]="{'disabled': internship.IsArchived}" (click)="toggleDetails(i)" class="internship">
         <div class="internship-preview">
           <img [src]="internship.Company.Logo"
                style="max-height: 60%; max-width: 60%; margin-left: 50%; transform: translateX(-50%); margin-bottom: 10px;"/>
@@ -86,8 +96,9 @@
           </div>
           <h2>{{internship.Title}}</h2>
           <h6 class="deadline">Location: {{internship.Location}}</h6>
-          <h6 class="deadline">Deadline: {{internship.Deadline|date}}</h6>
-          <div class="internship-description">{{internship.Description}}</div>
+          <h6 class="deadline">Deadline: {{internship.Deadline|date}} <span style="margin-left: 20px;">Starting Date: {{internship.StartingDate |date}}</span> </h6>
+          <div *ngIf="!isDetailedView[i]" class="internship-description">{{internship.Description}}</div>
+          <div *ngIf="isDetailedView[i]" class="detailed-internship-description">{{internship.Description}}</div>
           <button *ngIf="internship.IsArchived" class="internship-card-btn" (click)="restore(i)">Restore</button>
           <button *ngIf="!internship.IsArchived" class="internship-card-btn" (click)="archive(i)">Archive</button>
         </div>
@@ -154,6 +165,11 @@
           <div class="form-group">
             <label for="createDeadline">Deadline</label>
             <input type="date" [ngModel]="createdInternship.Deadline| date:'yyyy-MM-dd'" (ngModelChange)="createdInternship.Deadline = $event" name="Deadline" class="form-control" id="createDeadline" placeholder="Deadline">
+          </div>
+
+          <div class="form-group">
+            <label for="createStartingDate">Starting Date</label>
+            <input type="date" [ngModel]="createdInternship.StartingDate| date:'yyyy-MM-dd'" (ngModelChange)="createdInternship.StartingDate = $event" name="StartingDate" class="form-control" id="createStartingDate" placeholder="StartingDate">
           </div>
 
         </form>
@@ -224,6 +240,11 @@
           <div class="form-group">
             <label for="editDeadline">Deadline</label>
             <input type="date" [ngModel]="editedInternship.Deadline| date:'yyyy-MM-dd'" (ngModelChange)="editedInternship.Deadline = $event" name="Deadline" class="form-control" id="editDeadline" placeholder="Deadline">
+          </div>
+
+          <div class="form-group">
+            <label for="editStartingDate">Starting Date</label>
+            <input type="date" [ngModel]="editedInternship.StartingDate| date:'yyyy-MM-dd'" (ngModelChange)="editedInternship.StartingDate = $event" name="StartingDate" class="form-control" id="editStartingDate" placeholder="StartingDate">
           </div>
 
         </form>

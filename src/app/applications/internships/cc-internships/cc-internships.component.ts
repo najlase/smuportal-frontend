@@ -20,18 +20,29 @@ export class CcInternshipsComponent implements OnInit {
   editedInternship: Internship = null;
   editedInternshipIndex = -1;
 
-  createdInternship: Internship = {_id: null, Title: '', Company: null, IsArchived: false, Deadline: null, Description: '', Domain: '', Duration: '', Location: ''};
+  createdInternship: Internship = {_id: null, Title: '', Company: null, IsArchived: false, Deadline: null, Description: '', Domain: '', Duration: '', Location: '', StartingDate: null};
 
+  internshipFilters = {Title: '', Domain: '', Location: '', Deadline: null, Duration: '', StartingDate: null, HideArchived: false}
   companies: Company[] = [];
+  isDetailedView: boolean[] = [];
+
   constructor(private internshipService: InternshipService, private companyService: CompanyService) { }
 
   ngOnInit() {
     this.internshipService.getAll().then(res => {
       this.internships = res;
+      for(let i = 0; i < this.internships.length; i++)
+        this.isDetailedView.push(false);
     });
     this.companyService.get().then(res => {
       this.companies = res;
     })
+  }
+
+  filter(){
+    this.internshipService.filterAll(this.internshipFilters).then(res => {
+      this.internships = res;
+    });
   }
 
   selectForEdit(index: number)
@@ -67,8 +78,13 @@ export class CcInternshipsComponent implements OnInit {
     this.internshipService.create(this.createdInternship).then(res => {
       this.createdInternship._id = res._id;
       this.internships.unshift(this.createdInternship);
-      this.createdInternship = {_id: null, Title: '', Company: null, IsArchived: false, Deadline: null, Description: '', Domain: '', Duration: '', Location: ''};
+      this.createdInternship = {_id: null, Title: '', Company: null, IsArchived: false, Deadline: null, Description: '', Domain: '', Duration: '', Location: '', StartingDate: null};
     })
+  }
+
+  toggleDetails(index: number)
+  {
+    this.isDetailedView[index] = !this.isDetailedView[index];
   }
 
 }
