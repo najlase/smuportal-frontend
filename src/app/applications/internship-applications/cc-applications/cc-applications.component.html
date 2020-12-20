@@ -28,9 +28,9 @@
       <ng-container *ngFor="let app of applicationList| async; let i = index;">
         <tr>
           <th scope="row">{{i}}</th>
-          <td>{{app.userID}}</td>
-          <td>{{app.internshipID}}</td>
-          <td>{{app.appliedOn|date:'short'}}</td>
+          <td>{{app.UserID}}</td>
+          <td>{{app.InternshipID}}</td>
+          <td>{{app.AppliedOn|date:'short'}}</td>
           <td>
             <span class="table-change">
               <select name="validity">
@@ -39,7 +39,7 @@
                 <option value="none">none</option>
               </select>
               <input type="submit" value="Submit">
-              {{app.valid}}
+              {{app.Valid}}
             </span>
           </td>
           <td>
@@ -50,14 +50,13 @@
                 <option value="received by company">received by company</option>
               </select>
               <input type="submit" value="Submit">
-              {{app.status}}
+              {{app.Status}}
             </span>
           </td>
           <td>
             <span class="table-change">
               <button type="button" mdbBtn color="danger" rounded="true" size="sm" class="my-0" (click)="deleteApplication">Remove</button>
             </span>
-          </td>
           </td>
         </tr>
       </ng-container>

@@ -9,7 +9,7 @@ import { MyApplication} from '../models/Application.model';
 
 export class ApplicationListService {
 
-  constructor(private httpClient: HttpClient) { } 
+  constructor(private httpClient: HttpClient) { }
 
   ApplicationList:BehaviorSubject<MyApplication[]>=new BehaviorSubject<MyApplication[]>([]);
 
@@ -39,8 +39,8 @@ export class ApplicationListService {
 
   updateApplicationStatus(Application:MyApplication): Promise<any> {
     return this.httpClient.patch<any>(
-      'http://localhost:3000/api/user/applicationList/:id/'+ Application.userID,Application).toPromise();
-  } 
+      'http://localhost:3000/api/user/applicationList/:id/'+ Application.UserID,Application).toPromise();
+  }
 
   deleteApplication(id: string): void {
     this.httpClient.delete<any>(`http://localhost:3000/api/user/applicationList/:id/${id}`).subscribe({
@@ -52,7 +52,7 @@ export class ApplicationListService {
 
    })
  }
- 
+
  private deleteAppByID(id: string) {
    const apps: MyApplication[] = this.ApplicationList.getValue();
    apps.forEach((application, index) => {

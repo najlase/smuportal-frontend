@@ -92,7 +92,7 @@
           </div>
           <h2>{{internship.Title}}</h2>
           <h6 class="deadline">Location: {{internship.Location}}</h6>
-          <h6 class="deadline">Deadline: {{internship.Deadline|date}} <span style="margin-left: 20px;">Starting Date: {{internship.StartingDate |date}}</span> </h6>
+          <h6 class="deadline">Deadline: {{internship.Deadline|date}} <span style="margin-left: 20px;">Starting Date: {{internship.StartingDate |date}}</span> <span style="margin-left: 20px;">Duration: {{internship.Duration}}</span></h6>
           <div *ngIf="!isDetailedView[i]" class="internship-description">{{internship.Description}}</div>
           <div *ngIf="isDetailedView[i]" class="detailed-internship-description">{{internship.Description}}</div>
           <button *ngIf="!alreadyApplied(i)" class="internship-card-btn" (click)="apply(i)">Apply</button>

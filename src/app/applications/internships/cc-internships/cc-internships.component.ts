@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {faPen, faPlusCircle, faSearch} from "@fortawesome/free-solid-svg-icons";
+import {faChevronDown, faChevronUp, faPen, faPlusCircle, faSearch} from "@fortawesome/free-solid-svg-icons";
 import {InternshipService} from "@app/shared/services/internship.service";
 import {Internship} from "@app/shared/models/internship.model";
 import {Company} from "@app/shared/models/company.model";
@@ -15,6 +15,8 @@ export class CcInternshipsComponent implements OnInit {
   faPen = faPen;
   faSearch = faSearch;
   faAdd = faPlusCircle;
+  faDetails = faChevronDown;
+  faDetailsOff = faChevronUp;
 
   internships: Internship[] = []
   editedInternship: Internship = null;

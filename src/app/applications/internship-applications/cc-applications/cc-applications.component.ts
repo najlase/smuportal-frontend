@@ -12,21 +12,20 @@ export class CcApplicationsComponent implements OnInit {
   applicationList: BehaviorSubject<MyApplication[]>=new BehaviorSubject<MyApplication[]>([]);
   clicked:boolean[]=new Array(this.applicationList.getValue.length) ;
   constructor(private applicationListService:ApplicationListService,private router:Router) { }
+  appRemoved: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
   ngOnInit() {
-    this.applicationListService.getApplicationList.subscribe({
+    this.applicationListService.getApplicationList().subscribe({
       next: (data:MyApplication[])=>this.applicationList.next(data),
       error: (data:any)=>console.log(data)
     })
   }
 
-  appRemoved: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
- 
     deleteApplication(bid: string) {
-      this.applicationListService.deleteApplication(id);
+      this.applicationListService.deleteApplication(bid);
       this.appRemoved.next(true);
-      
+
     }
 
-  
+
 }
