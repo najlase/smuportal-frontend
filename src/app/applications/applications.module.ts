@@ -1,6 +1,8 @@
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
 import { CommonModule } from "@angular/common";
+import {InternshipsModule} from "@app/applications/internships/internships.module";
+import {InternshipApplicationsModule} from "@app/applications/internship-applications/internship-applications.module";
 
 const routes: Routes = [
   {
@@ -13,7 +15,10 @@ const routes: Routes = [
 ];
 @NgModule({
   declarations: [],
-  imports: [CommonModule, RouterModule.forChild(routes)],
+  imports: [CommonModule,
+    RouterModule.forChild(routes),
+    InternshipsModule,
+    InternshipApplicationsModule],
   exports: [RouterModule]
 })
 export class ApplicationsModule {}
