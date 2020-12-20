@@ -1,6 +1,6 @@
 export interface MyApplication {
     userID: number;
-    uinternshipID: number;
+    internshipID: number;
     files: string;
     appliedOn:Date;
     valid:string;
