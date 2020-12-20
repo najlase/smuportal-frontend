@@ -5,6 +5,7 @@ import { CcInternshipsComponent } from './cc-internships/cc-internships.componen
 import {RouterModule, Routes} from "@angular/router";
 import {SharedModule} from "@app/shared/shared.module";
 import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
+import { FormsModule } from '@angular/forms';
 
 
 const routes: Routes = [
@@ -31,7 +32,8 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     CommonModule,
     SharedModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    FormsModule
   ]
 })
 export class InternshipsModule { }

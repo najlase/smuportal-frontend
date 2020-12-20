@@ -79,8 +79,9 @@
           <div class="progress-container">
             <fa-icon [icon]="faStar" style="color: silver; font-size: 20px"></fa-icon>
           </div>
-          <h6 >Deadline: {{internship.Deadline}}</h6>
           <h2>{{internship.Title}}</h2>
+          <h6 class="deadline">Location: {{internship.Location}}</h6>
+          <h6 class="deadline">Deadline: {{internship.Deadline|date}}</h6>
           <div class="internship-description">{{internship.Description}}</div>
           <button class="internship-card-btn">Apply</button>
         </div>

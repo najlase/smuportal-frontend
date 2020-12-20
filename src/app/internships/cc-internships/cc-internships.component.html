@@ -4,23 +4,234 @@
   </a>
 </nav>
 
-
 <div class="d-flex" id="wrapper">
   <div class="border-right" id="sidebar-wrapper">
     <div class="list-group list-group-flush">
-      <a routerLink="details" routerLinkActive="selected" class="list-group-item list-group-item-action py-2 border-0">
-        <fa-icon [icon]="faUser"></fa-icon>
-        <span class="ml-2">My Account</span>
-      </a>
-      <a routerLink="security" routerLinkActive="selected" class="list-group-item list-group-item-action py-2 border-0">
-        <fa-icon [icon]="faUnlockAlt"></fa-icon>
-        <span class="ml-2">Security</span>
-      </a>
-      <a (click)="onLogout()" class="list-group-item list-group-item-action py-2 border-0">
-        <fa-icon [icon]="faSignOut"></fa-icon>
-        <span class="ml-2">Logout</span>
-      </a>
+      <div class="filter">
+        <div class="input-group mb-2">
+          <input type="text" style="padding-left: 10px;border-radius: 10px 0px 0px 10px; border: 1px solid silver;"
+                 id="inlineFormInputGroup" placeholder="Search">
+          <div class="input-group-prepend" style="cursor: pointer;">
+            <div class="input-group-text" style="border-radius: 0px 10px 10px 0px;">
+              <fa-icon [icon]="faSearch"></fa-icon>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="filter">
+        <span class="ml-2">Domain</span>
+        <select class="custom-select mr-sm-2">
+          <option>Choose...</option>
+          <option>Software Engineering</option>
+          <option>Mangement</option>
+        </select>
+      </div>
+
+      <div class="filter">
+        <span class="ml-2">Location</span>
+        <select class="custom-select mr-sm-2">
+          <option>Choose...</option>
+          <option>Tunisia</option>
+          <option>France</option>
+          <option>US</option>
+        </select>
+      </div>
+
+      <div class="filter">
+        <span class="ml-2">Deadline</span>
+        <input type="date" class="form-control mr-sm-2">
+      </div>
+
+      <div class="filter">
+        <span class="ml-2">Duration</span>
+        <select class="custom-select mr-sm-2">
+          <option>Choose...</option>
+          <option>1 Month or less</option>
+          <option>Between 1 and 3 months</option>
+          <option>More than 3 months</option>
+        </select>
+      </div>
+
+      <div class="form-check filter">
+        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+        <label class="form-check-label" for="defaultCheck1">
+          Show starred only
+        </label>
+      </div>
+
+      <button class="btn btn-success" style="margin-top: 20px; background-color: #368c95; border: 0px;">Filter</button>
     </div>
   </div>
-  <router-outlet></router-outlet>
+
+
+  <div class="content">
+    <button class="btn btn-success" style="margin-bottom: 30px;" data-toggle="modal" data-target="#createModal">
+      <fa-icon [icon]="faAdd"></fa-icon> Add new internship
+    </button>
+
+    <h3>Recent Posts</h3>
+    <div style="margin-top: 50px;">
+      <div *ngFor="let internship of internships; let i = index" [ngClass]="{'disabled': internship.IsArchived}"
+           class="internship" style="height: 170px">
+        <div class="internship-preview">
+          <img [src]="internship.Company.Logo"
+               style="max-height: 60%; max-width: 60%; margin-left: 50%; transform: translateX(-50%); margin-bottom: 10px;"/>
+          <h3 style="text-align: center;">{{internship.Company.Name}}</h3>
+        </div>
+        <div class="internship-info">
+          <div *ngIf="!internship.IsArchived" class="progress-container" data-toggle="modal" data-target="#editModal"
+               (click)="selectForEdit(i)">
+            <fa-icon [icon]="faPen" style="color: silver; font-size: 20px; cursor: pointer"></fa-icon>
+          </div>
+          <h2>{{internship.Title}}</h2>
+          <h6 class="deadline">Location: {{internship.Location}}</h6>
+          <h6 class="deadline">Deadline: {{internship.Deadline|date}}</h6>
+          <div class="internship-description">{{internship.Description}}</div>
+          <button *ngIf="internship.IsArchived" class="internship-card-btn" (click)="restore(i)">Restore</button>
+          <button *ngIf="!internship.IsArchived" class="internship-card-btn" (click)="archive(i)">Archive</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Creation Modal -->
+<div class="modal fade" id="createModal" tabindex="-1" role="dialog"
+     aria-labelledby="createModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="createModalLabel">Edit Internship Data</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label for="createTitle">Title</label>
+            <input type="text" [(ngModel)]="createdInternship.Title" name="Title" class="form-control" id="createTitle" placeholder="Title">
+          </div>
+
+          <div class="form-group">
+            <label for="createDomain">Domain</label>
+            <select class="custom-select mr-sm-2" id="createDomain" [(ngModel)]="createdInternship.Domain" name="Domain">
+              <option>Choose...</option>
+              <option>Software Engineering</option>
+              <option>Mangement</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="createCompany">Company</label>
+            <select class="custom-select mr-sm-2" [(ngModel)]="createdInternship.Company" name="Company" id="createCompany">
+              <option *ngFor="let company of companies" [ngValue]="company">{{company.Name}}</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="createDescription">Description</label>
+            <textarea type="text" [(ngModel)]="createdInternship.Description" name="Description" class="form-control" id="createDescription" placeholder="Description"></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="createLocation">Location</label>
+            <select class="custom-select mr-sm-2" name="Location" id="createLocation" [(ngModel)]="createdInternship.Location">
+              <option>Choose...</option>
+              <option>Tunisia</option>
+              <option>France</option>
+              <option>US</option>
+              <option>UK</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="createDuration">Duration</label>
+            <input type="text" [(ngModel)]="createdInternship.Duration" name="Duration" class="form-control" id="createDuration" placeholder="Duration">
+          </div>
+
+          <div class="form-group">
+            <label for="createDeadline">Deadline</label>
+            <input type="date" [ngModel]="createdInternship.Deadline| date:'yyyy-MM-dd'" (ngModelChange)="createdInternship.Deadline = $event" name="Deadline" class="form-control" id="createDeadline" placeholder="Deadline">
+          </div>
+
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary"  data-dismiss="modal" (click)="create()">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Editing modal -->
+<div *ngIf="editedInternship" class="modal fade" id="editModal" tabindex="-1" role="dialog"
+     aria-labelledby="editModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editModalLabel">Edit Internship Data</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label for="editTitle">Title</label>
+            <input type="text" [(ngModel)]="editedInternship.Title" name="Title" class="form-control" id="editTitle" placeholder="Title">
+          </div>
+
+          <div class="form-group">
+            <label for="editDomain">Domain</label>
+            <select class="custom-select mr-sm-2" id="editDomain" [(ngModel)]="editedInternship.Domain" name="Domain">
+              <option>Choose...</option>
+              <option>Software Engineering</option>
+              <option>Mangement</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="editCompany">Company</label>
+            <select class="custom-select mr-sm-2" [(ngModel)]="editedInternship.Company" name="Company" id="editCompany">
+              <option *ngFor="let company of companies" [ngValue]="company">{{company.Name}}</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="editDescription">Description</label>
+            <textarea type="text" [(ngModel)]="editedInternship.Description" name="Description" class="form-control" id="editDescription" placeholder="Description"></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="editLocation">Location</label>
+            <select class="custom-select mr-sm-2" name="Location" id="editLocation" [(ngModel)]="editedInternship.Location">
+              <option>Choose...</option>
+              <option>Tunisia</option>
+              <option>France</option>
+              <option>US</option>
+              <option>UK</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="editDuration">Duration</label>
+            <input type="text" [(ngModel)]="editedInternship.Duration" name="Duration" class="form-control" id="editDuration" placeholder="Duration">
+          </div>
+
+          <div class="form-group">
+            <label for="editDeadline">Deadline</label>
+            <input type="date" [ngModel]="editedInternship.Deadline| date:'yyyy-MM-dd'" (ngModelChange)="editedInternship.Deadline = $event" name="Deadline" class="form-control" id="editDeadline" placeholder="Deadline">
+          </div>
+
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary"  data-dismiss="modal" (click)="saveEdit()">Save changes</button>
+      </div>
+    </div>
+  </div>
 </div>
