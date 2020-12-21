@@ -1,7 +1,11 @@
 <nav class="navbar navbar-expand-lg border-bottom">
   <a class="navbar-brand" href="#">
-    <img src="assets/headerimg@2x.png" class="logo" alt="Home Page" id="open-menu">
+    <img src="../../../../assets/headerimg@2x.png" class="logo" alt="Home Page" id="open-menu">
   </a>
+
+  <div style="margin-left: calc(20% - 245px);" class="navbar-item active">Dashboard</div>
+  <div class="navbar-item"  routerLink="student/s">Applications</div>
+  <div class="navbar-item">Documents</div>
 </nav>
 <ng-container *ngIf="this.appRemoved | async">
   <div class="alert alert-success alert-dismissible fade show" role="alert">
